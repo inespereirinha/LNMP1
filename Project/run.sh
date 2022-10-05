@@ -5,14 +5,14 @@ mkdir -p compiled images
 # ############ Convert friendly and compile to openfst ############
 for i in friendly/*.txt; do
 	echo "Converting friendly: $i"
-   python3 compact2fst.py  $i  > sources/$(basename $i ".formatoAmigo.txt").txt
+   python compact2fst.py  $i  > sources/$(basename $i ".formatoAmigo.txt").txt
 done
 
 
 # ############ convert words to openfst ############
 for w in tests/*.str; do
 	echo "Converting words: $w"
-	python3 word2fst.py `cat $w` > tests/$(basename $w ".str").txt
+	python ./word2fst.py `cat $w` > tests/$(basename $w ".str").txt
 done
 
 
@@ -34,7 +34,7 @@ done
 
 # ############ generate PDFs  ############
 echo "Starting to generate PDFs"
-for i in compiled/step*.fst; do
+for i in compiled/*.fst; do
 	echo "Creating image: images/$(basename $i '.fst').pdf"
    fstdraw --portrait --isymbols=syms.txt --osymbols=syms.txt $i | dot -Tpdf > images/$(basename $i '.fst').pdf
 done
