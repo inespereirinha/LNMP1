@@ -1,0 +1,40 @@
+0	0	A	A	4
+0	0	E	E	4
+0	0	I	I	4
+0	0	O	O	4
+0	0	U	U	4
+0	0	B	B	4
+0	0	C	C	4
+0	0	D	D	4
+0	0	F	F	4
+0	0	G	G	4
+0	0	H	H	4
+0	0	J	J	4
+0	0	K	K	4
+0	0	L	L	4
+0	0	M	M	4
+0	0	N	N	4
+0	0	P	P	4
+0	0	Q	Q	4
+0	0	R	R	4
+0	0	S	S	4
+0	0	T	T	4
+0	0	V	V	4
+0	0	W	W	4
+0	0	X	X	4
+0	0	Y	Y	4
+0	0	Z	Z	4
+0	0	0	0	4
+0	0	C	K	3
+0	1	C	S	2
+1	0	E	E
+1	0	I	I
+1	0	Y	Y
+0	2	C	X	1
+2	0	H	H
+2	3	I	I
+3	0	A	A
+0	4	S	S
+4	5	C	K
+5	0	H	H
+0
