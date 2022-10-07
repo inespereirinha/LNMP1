@@ -47,5 +47,5 @@ echo "Testing"
 
 for w in compiled/t-*.fst; do
     fstcompose $w compiled/metaphoneLN.fst | fstshortestpath | fstproject --project_type=output |
-    fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
+    fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt > sources $(basename $w 'in')out.txt
 done
