@@ -10,14 +10,14 @@ done
 
 
 # ############ convert words to openfst ############
-for w in tests/*.str; do
+for w in tests/*-in.str; do
 	echo "Converting words: $w"
 	python ./word2fst.py `cat $w` > tests/$(basename $w ".str").txt
 done
 
 
 # ############ Compile source transducers ############
-for i in sources/*.txt tests/*.txt; do
+for i in sources/*.txt tests/*-in.txt; do
 	echo "Compiling: $i"
     fstcompile --isymbols=syms.txt --osymbols=syms.txt $i | fstarcsort > compiled/$(basename $i ".txt").fst
 done
@@ -32,20 +32,27 @@ done
 # Creation of invertMetaphoneLN
     fstinvert compiled/metaphoneLN.fst | fstarcsort > compiled/invertMetaphoneLN.fst
 
+# ############ tests  ############
+
+echo "Testing"
+
+for w in compiled/t-*-in.fst; do
+    fstcompose $w compiled/metaphoneLN.fst | fstshortestpath | fstproject --project_type=output |
+    fstrmepsilon | fsttopsort > compiled/$(basename $w 'in.fst')out.fst
+    
+    fstcompose $w compiled/metaphoneLN.fst | fstshortestpath | fstproject --project_type=output |
+    fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt > tests/$(basename $w 'in.fst')out.txt
+done
+
+for w in compiled/t-*-out.fst; do
+
+    fstcompose $w compiled/invertMetaphoneLN.fst | fstshortestpath | fstproject --project_type=output |
+    fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt
+done
+
 # ############ generate PDFs  ############
 echo "Starting to generate PDFs"
 for i in compiled/*.fst; do
 	echo "Creating image: images/$(basename $i '.fst').pdf"
    fstdraw --portrait --isymbols=syms.txt --osymbols=syms.txt $i | dot -Tpdf > images/$(basename $i '.fst').pdf
-done
-
-
-
-# ############ tests  ############
-
-echo "Testing"
-
-for w in compiled/t-*.fst; do
-    fstcompose $w compiled/metaphoneLN.fst | fstshortestpath | fstproject --project_type=output |
-    fstrmepsilon | fsttopsort | fstprint --acceptor --isymbols=./syms.txt > tests/$(basename $w 'in.fst')out.txt
 done
